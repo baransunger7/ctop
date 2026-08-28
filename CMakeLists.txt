@@ -38,7 +38,12 @@ add_executable(ctop src/main.cpp
         include/sysmon/application.hpp
         include/sysmon/ui/main_window.hpp
         src/ui/main_window.cpp
-        include/sysmon/models/system_info.hpp)
+        include/sysmon/models/system_info.hpp
+        include/sysmon/commands/command.hpp
+        include/sysmon/commands/kill_command.hpp
+        src/commands/kill_command.cpp
+        include/sysmon/commands/command_manager.hpp
+        src/commands/command_manager.cpp)
 
 target_include_directories(ctop PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
