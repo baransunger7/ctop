@@ -33,6 +33,9 @@ CommandResult CommandManager::executeFromString(const std::string& input) {
         return {false, "Empty Command"};
     }
     auto args = parseInput(input);
+    if (args.empty()) {
+        return {false,"Empty Command"};
+    }
     const std::string& commandName = args[0];
 
     auto it = commandRegistry_.find(commandName);

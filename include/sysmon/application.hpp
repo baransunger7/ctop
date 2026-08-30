@@ -2,6 +2,7 @@
 #include "sysmon/core/system_reader.hpp"
 #include "sysmon/core/process_view.hpp"
 #include "sysmon/core/process_reader.hpp"
+#include "sysmon/models/system_info.hpp"
 #include <mutex>
 #include <thread>
 #include <atomic>
@@ -11,24 +12,20 @@
 
 class Application {
 public:
-    // Uygulamayı ve ana UI döngüsünü başlatacak tek fonksiyon
     void run();
 
 private:
-    // --- Çekirdek Bileşenler ---
     sysmon::SystemReader sysReader;
     sysmon::ProcessReader procReader;
     sysmon::ProcessView view;
 
     ftxui::ScreenInteractive* screenPtr{nullptr};
-    // --- Paylaşımlı Veri ve Senkronizasyon (Senin hedefin) ---
-    std::vector<sysmon::ProcessInfo> currProcesses; // Her iki thread'in okuyup/yazacağı veri
+    std::vector<sysmon::ProcessInfo> currProcesses;
     std::vector<sysmon::ProcessInfo> viewList;
-    std::mutex mt;                      // Çarpışmayı önleyen kilit
+    sysmon::SystemInfo currentSysInfo;
+    std::mutex mt;
 
-    // --- Thread Yönetimi ---
     std::jthread workerThread;
 
-    // --- Arka Plan Fonksiyonu ---
-    void workerLoop(std::stop_token stopToken);                          // Saniyede bir çalışacak işçi
+    void workerLoop(std::stop_token stopToken);
 };

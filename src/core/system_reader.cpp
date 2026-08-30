@@ -85,8 +85,8 @@ std::vector<CpuStats> SystemReader::readCpuStats() {
         std::stringstream ss(line);
         std::string coreId;
         ss >> coreId;
-        if (line.compare(0,3,"cpu") == 0) {
-            continue;
+        if (line.compare(0,3,"cpu") != 0) {
+            break;
         }
         CpuStats stats;
         stats.id = coreId;
@@ -127,7 +127,7 @@ std::vector<double> SystemReader::getCpuUsages(){
 
         if (totalDelta > 0) {
             long long activeDelta = totalDelta - idleDelta;
-            usage = (static_cast<double>(activeDelta)*100)/static_cast<double>(totalDelta);
+            usage = static_cast<double>(activeDelta)/static_cast<double>(totalDelta);
         }
         cpuUsages.push_back(usage);
     }

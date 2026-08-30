@@ -3,10 +3,11 @@
 #include <cstddef>
 
 namespace sysmon {
-    struct SystemInfo {
-        double globalCpuPercent{0.0};
-        std::vector<double> coresPercent;
-        double ramPercent{0.0};
-        size_t totalTasks{0};
-    };
+struct SystemInfo {
+    float ramUsage{0.0f};
+    std::vector<float> coresUsages;
+    int totalTasks{0};
+    int runningTasks{0};
+    int sleepingTasks{0};
+};
 }

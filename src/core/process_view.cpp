@@ -55,7 +55,7 @@ namespace sysmon {
         }), std::back_inserter(filteredProcesses));
 
         std::ranges::sort(filteredProcesses, [this](const ProcessInfo& a, const ProcessInfo& b) {
-            if (reverseOrder) {
+            if (!reverseOrder) {
                 switch (this->currentSortKey) {
                     case SortKey::CPU:
                         if (a.cpuPercent == b.cpuPercent) return a.pid > b.pid;

@@ -43,7 +43,9 @@ add_executable(ctop src/main.cpp
         include/sysmon/commands/kill_command.hpp
         src/commands/kill_command.cpp
         include/sysmon/commands/command_manager.hpp
-        src/commands/command_manager.cpp)
+        src/commands/command_manager.cpp
+        include/sysmon/ui/command_prompt.hpp
+        src/ui/command_prompt.cpp)
 
 target_include_directories(ctop PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include
