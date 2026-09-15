@@ -9,6 +9,7 @@
 #include "sysmon/ui/main_window.hpp"
 #include "sysmon/commands/command_manager.hpp"
 #include "sysmon/commands/kill_command.hpp"
+#include "sysmon/commands/renice_command.hpp"
 void Application::workerLoop(std::stop_token stopToken){
     while (!stopToken.stop_requested()) {
         auto freshData = procReader.getAllProcesses(sysReader);
@@ -57,6 +58,18 @@ void Application::run() {
             return nullptr;
         }
         return nullptr;
+    });
+
+    cmdManager.registerCommand("renice",[](const std::vector<std::string>& args) -> std::unique_ptr<sysmon::commands::Command> {
+        if (args.size() < 3 ) return nullptr;
+        try {
+            int pid = std::stoi(args[1]);
+            int niceValue = std::stoi(args[2]);
+            return std::make_unique<sysmon::commands::ReniceCommand>(pid,niceValue);
+        }catch (...) {
+            return nullptr;
+        }
+
     });
     workerThread = std::jthread(&Application::workerLoop, this);
     sysmon::MainWindow mainWindow(currProcesses,currentSysInfo,mt,view,cmdManager);

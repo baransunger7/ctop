@@ -4,7 +4,7 @@
 #include <cstring>
 
 namespace sysmon::commands {
-KillCommand::KillCommand(int pid,int signal)
+KillCommand::KillCommand(const int pid,const int signal)
     : targetPid_{pid},signal_(signal) {}
 
 std::string KillCommand::getName() const {

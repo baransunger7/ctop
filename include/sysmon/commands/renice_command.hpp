@@ -1,15 +1,16 @@
 #pragma once
-#include <csignal>
 #include "sysmon/commands/command.hpp"
 
+
 namespace sysmon::commands {
-class KillCommand : public Command {
+class ReniceCommand : public Command {
 public:
-    explicit KillCommand(const int pid,const int signal = SIGTERM);
+    explicit ReniceCommand(const int pid,const int niceValue);
     [[nodiscard]] CommandResult execute() override;
     [[nodiscard]] std::string getName() const override;
+
 private:
     int targetPid_;
-    int signal_;
+    int niceValue_;
 };
 }
